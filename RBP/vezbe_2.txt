@@ -1,0 +1,183 @@
+-- RELACIONI RACUN --
+
+-- 1 --
+
+range of px is predmet
+
+px.naziv, px.bodovi
+
+-- 2 --
+
+range of dx is dosije
+
+dx.indeks, dx.ime, dx.prezime
+where dx.mesto_rodjenja='Beograd'
+
+-- 3 --
+
+range of dx is dosije
+range of ix is ispit
+
+dx.indeks, dx.ime, dx.prezime,
+ix.ocena , ix.godina_roka, ix.oznaka_roka
+where ix.indeks = dx.indeks
+
+-- 4 --
+
+range of dx is dosije
+range of ix is ispit
+
+dx.ime, dx.prezime
+where exists ix(ix.indeks = dx.indeks and ix.id_predmeta=2001)
+
+-- 5 --
+
+range of dx is dosije
+range of ix is ispit
+range of px is predmet
+
+dx.indeks
+where forall px( exists ix(ix.indeks = dx.indeks and ix.id_predmeta = px.id_predmeta))
+
+-- 6 --
+
+range of dx is dosije
+range of ix is ispit
+range of px is predmet
+
+dx.ime, dx.prezime
+where exists ix(ix.ocena>5 and ix.indeks = dx.indeks
+    and exists px(px.bodovi=6 and px.id_predmeta=ix.id_predmeta))
+)
+
+-- 7 --
+
+range of dx is dosije
+range of ix1 is ispit
+range of ix2 is ispit
+
+dx.indeks
+where forall ix1(if ix1.indeks=20130023 then exists ix2(
+    ix1.id_predmeta = ix2.id_predmeta and ix1.ocena>5 and ix1.indeks=dx.indeks
+)))
+
+-- 8 --
+
+range of dx is dosije
+range of ix is ispit
+range of px is predmet
+
+px.naziv
+where forall dx(if dx.indeks/10000>2013 and dx.indeks/10000<2014
+    then exists ix(ix.indeks=dx.indeks and ix.ocena>5 and ix.id_predmeta=px.id_predmeta))
+)
+
+-- 9 --
+
+range of dx is dosije
+range of ix is ispit
+
+dx.ime, dx.prezime
+where not exists ix(ix.indeks=dx.indeks and ix.id_predmeta=1021)
+
+-- 10 --
+
+range of ix is ispit
+range of px is predmet
+
+px.sifra
+where px.bodovi=6
+or exists ix(ix.id_predmeta=px.id_predmeta and ix.ocena>5
+    ix.godina_roka=2015 and ix.oznaka_roka='jan'
+)
+
+-- 11 --
+
+range of ix is ispit
+range of px is predmet
+range of irx is ispitni_rok
+
+irx.naziv
+where exists px(px.naziv='Programiranje 1' and exists ix(
+    ix.id_predmeta = px.id_predmeta and ix.godina_roka = irx.godina_roka
+    and irx.oznaka_roka = ix.godina_roka
+))
+
+-- 12 --
+
+range of px is predmet
+range of py is predmet
+
+px.id_predmeta
+where exists py(py.id_predmeta=2004 and px.bodovi<py.bodovi)
+
+-- 13 --
+
+range of dx is dosije
+range of ix is ispit
+
+dx.ime, dx.prezime
+where exists ix(ix.indeks=dx.indeks and ix.ocena=6)
+and exists ix(ix.indeks=dx.indeks and ix.ocena=10)
+
+-- 14 --
+
+range of dx is dosije
+range of ix is ispit
+range of px is predmet
+
+px.naziv
+where exists ix(ix.ocena>5 and ix.id_predmeta=px.id_predmeta and
+    exists dx(dx.indeks = ix.indeks and dx.ime='Nikola' and dx.prezime='Vukovic')
+)
+
+-- 15 --
+
+range of dx is dosije
+range of dy is dosije
+
+dx.indeks, dy.indeks
+where dx.mesto_rodjenja = dy.mesto_rodjenja
+and dx.indeks<dy.indeks
+
+-- 16 --
+
+range of dx is dosije
+range of ix is ispit
+range of px is predmet
+range of irx is ispitni_rok
+
+predmet.naziv
+where exists dx(dx.mesto_rodjenja = 'Beograd' and exists ix (
+    ix.ocena>5 and ix.indeks=dx.indeks and px.id_predmeta=ix.id_predmeta
+    and exists irx(
+        irx.godina_roka=ix.godina_roka and irx.oznaka_roka = ir.oznaka_roka
+        and irx.naziv='April 2015'
+    )
+))
+
+-- 17 --
+
+range of dx is dosije
+range of px is predmet
+range of ix is ispit
+
+dx.ime, dx.prezime
+where exists px( exists ix(ix.indeks=20140025 and ix.ocena>5
+    and ix.id_predmeta = px.id_predmeta)
+and exists ix(ix.indeks=dx.indeks and ix.ocena>5
+    and ix.id_predmeta = px.id_predmeta)
+)
+
+-- 18 --
+
+range of dx is dosije
+range of px is predmet
+range of ix is ispit
+
+ix.oznaka_roka, ix.godina_roka
+where forall dx(if dx.mesto_rodjenja = 'Kraljevo' then not exists ix(
+    ix.indeks = dx.indeks and ix.ocena>5 and exists px(
+        px.id_predmeta=ix.id_predmeta and px.bodovi=4
+    )
+))
