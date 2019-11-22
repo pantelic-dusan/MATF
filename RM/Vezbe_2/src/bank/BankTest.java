@@ -1,4 +1,4 @@
-package Bank;
+package bank;
 
 public class BankTest {
     private static final int ACCOUNTS = 5;

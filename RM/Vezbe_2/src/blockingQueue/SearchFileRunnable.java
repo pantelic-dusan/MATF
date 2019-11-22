@@ -1,4 +1,4 @@
-package BlockingQueue;
+package blockingQueue;
 
 import java.io.IOException;
 import java.nio.file.Path;

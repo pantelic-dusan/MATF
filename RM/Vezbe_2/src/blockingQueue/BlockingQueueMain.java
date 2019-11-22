@@ -1,4 +1,4 @@
-package BlockingQueue;
+package blockingQueue;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
